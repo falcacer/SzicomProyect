@@ -37,17 +37,21 @@ export async function loader({ req, params }: any) {
   }
 }
 
-export async function action({ req, params }: any) {
+export async function action({ request, params }: any) {
   const questionId = params.questionId;
   const token = getAuthToken();
-
+  
   const response = await fetch(
     `http://localhost:8080/questions/${questionId}`,
-    { method: req.method,
-    headers: {
-      'Authorization': 'Bearer ' + token
-    } }
+    {
+      method: request.method,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
   );
+
+  console.log(response)
 
   if (!response.ok) {
     throw json({ message: "Could not delete question." }, { status: 500 });

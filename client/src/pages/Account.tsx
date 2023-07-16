@@ -1,5 +1,6 @@
 import AuthForm from "../Components/AuthForm";
 import { json, redirect } from "react-router-dom";
+import { getUserFromToken } from "../util/auth";
 
 type Props = {};
 

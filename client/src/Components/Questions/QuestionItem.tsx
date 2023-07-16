@@ -1,7 +1,14 @@
-import { Link, useSubmit } from "react-router-dom";
+import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
 import classes from "./QuestionItem.module.css";
+import { getUserFromToken } from "../../util/auth";
 
 function QuestionItem({ question }: any) {
+  const token: any = useRouteLoaderData("root");
+  let currentUser = true;
+  if (token) {
+    currentUser = question.user === getUserFromToken(token);
+  }
+  
   const submit = useSubmit();
 
   function startDeleteHandler() {
@@ -9,7 +16,6 @@ function QuestionItem({ question }: any) {
 
     if (proceed) {
       submit(null, { method: "delete" });
-    } else {
     }
   }
 
@@ -23,10 +29,12 @@ function QuestionItem({ question }: any) {
         <h1>{question.title}</h1>
         <p>{question.content}</p>
       </div>
-      <menu className={classes.actions}>
-        <Link to="edit">Edit</Link>
-        <button onClick={startDeleteHandler}>Delete</button>
-      </menu>
+      {token && currentUser && (
+        <menu className={classes.actions}>
+          <Link to="edit">Edit</Link>
+          <button onClick={startDeleteHandler}>Delete</button>
+        </menu>
+      )}
     </article>
   );
 }

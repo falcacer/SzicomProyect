@@ -1,5 +1,5 @@
-import jsonwebtoken from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import jsonwebtoken from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import { NotAuthError } from "./errors.js";
 
 const KEY = "supersecret";

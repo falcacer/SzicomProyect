@@ -1,6 +1,15 @@
 import express from "express";
-import { get, getAll, set as setQuestion } from "../data/question.js";
+import {
+  get,
+  getAll,
+  set as setQuestion,
+  add,
+  replace,
+  erase,
+} from "../data/question.js";
 import { set as setAnswer, get as getAnswers } from "../data/answer.js";
+import { isValidText } from "../util/validation.js";
+import { checkAuthMiddleware } from "../util/auth.js";
 
 export const router = express.Router();
 
@@ -33,9 +42,10 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.use(checkAuthMiddleware);
+
 router.post("/", async (req, res, next) => {
   const data = req.body;
-  console.log(data)
 
   let errors = {};
 
@@ -54,46 +64,50 @@ router.post("/", async (req, res, next) => {
   }
 
   try {
-    await add(data.id_user, data.title, data.content);
-    res.status(201).json({ message: "Question saved.", question: data });
+    const createdQuestion = await add(data.user, data.title, data.content);
+    res
+      .status(201)
+      .json({ message: "Question saved.", question: createdQuestion });
   } catch (error) {
     next(error);
   }
 });
 
-// router.patch("/:id", async (req, res, next) => {
-//   const data = req.body;
+router.patch("/:id", async (req, res, next) => {
+  const data = req.body;
 
-//   let errors = {};
+  let errors = {};
 
-//   if (!isValidText(data.title)) {
-//     errors.title = "Invalid Title.";
-//   }
+  if (!isValidText(data.title)) {
+    errors.title = "Invalid Title.";
+  }
 
-//   if (!isValidText(data.content)) {
-//     errors.content = "Invalid Content.";
-//   }
+  if (!isValidText(data.content)) {
+    errors.content = "Invalid Content.";
+  }
 
-//   if (Object.keys(errors).length > 0) {
-//     return res.status(422).json({
-//       message: "Updating the question failed due to validation errors.",
-//       errors,
-//     });
-//   }
+  if (Object.keys(errors).length > 0) {
+    return res.status(422).json({
+      message: "Updating the question failed due to validation errors.",
+      errors,
+    });
+  }
 
-//   try {
-//     await (req.params.id, data);
-//     res.json({ message: "Event updated.", event: data });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+  try {
+    const updatedQuestion = await replace(data);
+    res.json({ message: "Event updated.", event: data });
+  } catch (error) {
+    next(error);
+  }
+});
 
-// router.delete('/:id', async (req, res, next) => {
-//   try {
-//     await remove(req.params.id);
-//     res.json({ message: 'Question deleted.' });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.delete("/:id", async (req, res, next) => {
+  try {
+    console.log("here");
+    const id = req.params.id;
+    const removedQuestion = await erase(id);
+    res.json({ message: "Question deleted." });
+  } catch (error) {
+    next(error);
+  }
+});

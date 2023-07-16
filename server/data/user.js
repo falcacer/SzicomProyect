@@ -15,7 +15,7 @@ export async function get(username) {
   }
 
   const user = users.find((user) => user.username === username);
-  
+
   if (!user) {
     throw new NotFoundError(`Could not find user for username ${username}`);
   }

@@ -5,7 +5,7 @@ import QuestionDetails, {
   loader as questionDetailLoader,
   action as deleteQuestionAction,
 } from "./pages/QuestionDetails";
-import NewQuestion, { action as newQuestionAction } from "./pages/NewQuestion";
+import NewQuestion from "./pages/NewQuestion";
 import QuestionEdit from "./pages/QuestionEdit";
 import RootLayout from "./pages/Root";
 import QuestionsRootLayout from "./pages/QuestionsRoot";
@@ -13,6 +13,7 @@ import Error from "./pages/Error";
 import Home from "./pages/Home";
 import { action as logoutAction } from "./pages/Logout";
 import { checkAuthLoader, tokenLoader } from "./util/auth";
+import { action as maniputaleQuestionAction } from "./Components/Questions/QuestionForm";
 
 const router = createBrowserRouter([
   {
@@ -46,13 +47,14 @@ const router = createBrowserRouter([
                 path: "edit",
                 element: <QuestionEdit />,
                 loader: checkAuthLoader,
+                action: maniputaleQuestionAction,
               },
             ],
           },
           {
             path: "new",
             element: <NewQuestion />,
-            action: newQuestionAction,
+            action: maniputaleQuestionAction,
             loader: checkAuthLoader,
           },
         ],

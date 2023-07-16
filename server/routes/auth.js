@@ -57,5 +57,6 @@ router.post("/login", async (req, res) => {
   }
 
   const token = createJSONToken(username);
+
   res.json({ token });
 });

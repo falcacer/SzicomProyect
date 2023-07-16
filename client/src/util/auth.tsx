@@ -10,11 +10,19 @@ export function tokenLoader() {
 }
 
 export function checkAuthLoader() {
-  const token = getAuthToken()
-  
+  const token = getAuthToken();
+
   if (!token) {
-    return redirect('/auth');
+    return redirect("/auth");
   }
 
-  return null
+  return null;
 }
+
+export function getUserFromToken(token : any) {
+  const [headerBase64, payloadBase64, signatureBase64] = token.split(".");
+  const payloadJSON = JSON.parse(atob(payloadBase64));
+  const user = payloadJSON.username || null;
+  return user;
+}
+
