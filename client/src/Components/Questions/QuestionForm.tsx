@@ -12,7 +12,7 @@ const QuestionForm = ({ method, question }: any) => {
   }
 
   return (
-    <Form method="post" className={classes.form}>
+    <Form method={method} className={classes.form}>
       <p>
         <label htmlFor="title">Title</label>
         <input

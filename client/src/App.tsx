@@ -10,14 +10,19 @@ import QuestionEdit from "./pages/QuestionEdit";
 import RootLayout from "./pages/Root";
 import QuestionsRootLayout from "./pages/QuestionsRoot";
 import Error from "./pages/Error";
+import Home from "./pages/Home";
+import { action as logoutAction } from "./pages/Logout";
+import { checkAuthLoader, tokenLoader } from "./util/auth";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <Error />,
+    id: "root",
+    loader: tokenLoader,
     children: [
-      { index: true, element: <Account />, action: authAction },
+      { index: true, element: <Home /> },
       {
         path: "questions",
         element: <QuestionsRootLayout />,
@@ -37,12 +42,23 @@ const router = createBrowserRouter([
                 element: <QuestionDetails />,
                 action: deleteQuestionAction,
               },
-              { path: "edit", element: <QuestionEdit /> },
+              {
+                path: "edit",
+                element: <QuestionEdit />,
+                loader: checkAuthLoader,
+              },
             ],
           },
-          { path: "new", element: <NewQuestion />, action: newQuestionAction },
+          {
+            path: "new",
+            element: <NewQuestion />,
+            action: newQuestionAction,
+            loader: checkAuthLoader,
+          },
         ],
       },
+      { path: "auth", element: <Account />, action: authAction },
+      { path: "logout", action: logoutAction },
     ],
   },
 ]);

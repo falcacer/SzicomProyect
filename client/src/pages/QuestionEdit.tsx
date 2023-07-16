@@ -8,7 +8,7 @@ const QuestionEdit = () => {
 
   return (
     <Card>
-      <QuestionForm question={question}/>
+      <QuestionForm method={"patch"} question={question}/>
     </Card>
   );
 };

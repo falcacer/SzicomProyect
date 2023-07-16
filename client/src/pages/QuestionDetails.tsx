@@ -3,6 +3,7 @@ import QuestionItem from "../Components/Questions/QuestionItem";
 import { json, redirect, useRouteLoaderData } from "react-router-dom";
 import { Answer } from "../types";
 import Card from "../UI/Card";
+import { getAuthToken } from "../util/auth";
 
 const QuestionDetails = () => {
   const data: any = useRouteLoaderData("questionDetail");
@@ -38,9 +39,14 @@ export async function loader({ req, params }: any) {
 
 export async function action({ req, params }: any) {
   const questionId = params.questionId;
+  const token = getAuthToken();
+
   const response = await fetch(
     `http://localhost:8080/questions/${questionId}`,
-    { method: req.method }
+    { method: req.method,
+    headers: {
+      'Authorization': 'Bearer ' + token
+    } }
   );
 
   if (!response.ok) {

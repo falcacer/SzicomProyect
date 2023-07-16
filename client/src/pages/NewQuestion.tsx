@@ -8,7 +8,7 @@ const NewQuestion = () => {
   };
   return (
     <div>
-      <QuestionForm question={questionNull} />
+      <QuestionForm method={"post"} question={questionNull} />
     </div>
   );
 };

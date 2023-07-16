@@ -1,7 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteLoaderData } from "react-router-dom";
 import classes from "./QuestionsNavigation.module.css";
 
 function QuestionsNavigation() {
+  const token : any = useRouteLoaderData("root");
+
   return (
     <header className={classes.header}>
       <nav>
@@ -17,16 +19,18 @@ function QuestionsNavigation() {
               All Questions
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to="/questions/new"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
-            >
-              New Question
-            </NavLink>
-          </li>
+          {token && (
+            <li>
+              <NavLink
+                to="/questions/new"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                New Question
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
