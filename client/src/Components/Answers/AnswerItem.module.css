@@ -1,0 +1,31 @@
+.item {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  color: black;
+  border: solid 1px black;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 1.5rem;
+}
+
+.message {
+  font-size: 1.2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.user {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.date {
+  font-size: 0.75rem;
+  color: rgb(65, 61, 61);
+  text-align: left;
+}

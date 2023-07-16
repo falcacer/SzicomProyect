@@ -1,0 +1,50 @@
+.container {
+  border: 1px solid rgba(128, 128, 128, 0.153);
+  border-radius: 1rem;
+  margin-bottom: 3rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 1rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content h1 {
+  font-size: 2rem;
+}
+
+.content p {
+  font-size: 1.3rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.actions a,
+.actions button {
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.actions button {
+  background-color: transparent;
+  border: none;
+  color: var(--color-primary-800);
+}
