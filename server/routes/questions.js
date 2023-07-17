@@ -2,10 +2,13 @@ import express from "express";
 import {
   get,
   getAll,
+  getQuestionbyDate,
   set as setQuestion,
+  updateDate,
   add,
   replace,
   erase,
+  updateDateDB,
 } from "../data/question.js";
 import { set as setAnswer, get as getAnswers } from "../data/answer.js";
 import { isValidText } from "../util/validation.js";
@@ -15,7 +18,11 @@ export const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const data = await getAll();
+    const data = await getQuestionbyDate();
+    data[0] = updateDate(data[0]) // esta funcion NO modifica la date de la base de datos
+
+    // data[0] = await get(await updateDateDB(data[0])) /// esta funcion SI modifica la date de la bd
+
     let questions = [];
     await Promise.all(
       data.map(async (elem) => {
@@ -52,7 +59,7 @@ router.post("/", async (req, res, next) => {
   if (!isValidText(data.title)) {
     errors.title = "invalid Title";
   }
-  if (!isValidText(data.content)) { 
+  if (!isValidText(data.content)) {
     errors.content = "invalid Content";
   }
 
