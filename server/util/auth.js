@@ -20,6 +20,7 @@ export function checkAuthMiddleware(req, res, next) {
   if (req.method === "OPTIONS") {
     return next();
   }
+
   if (!req.headers.authorization) {
     console.log("NOT AUTH. AUTH HEADER MISSING.");
     return next(new NotAuthError("Not authenticated."));

@@ -1,9 +1,11 @@
 import bodyParser from "body-parser";
 import express from "express";
 import { router as questionRoutes } from "./routes/questions.js";
-import { router as authRoutes} from "./routes/auth.js";
+import { router as authRoutes } from "./routes/auth.js";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use((req, res, next) => {

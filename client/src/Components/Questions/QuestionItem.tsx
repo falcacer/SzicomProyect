@@ -8,7 +8,7 @@ function QuestionItem({ question }: any) {
   if (token) {
     currentUser = question.user === getUserFromToken(token);
   }
-  
+
   const submit = useSubmit();
 
   function startDeleteHandler() {

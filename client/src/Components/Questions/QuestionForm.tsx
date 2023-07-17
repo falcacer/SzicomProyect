@@ -59,7 +59,7 @@ export async function action({ request, params }: any) {
   const token = getAuthToken();
   const user = getUserFromToken(token);
 
-  let questionData : any = {
+  let questionData: any = {
     title: data.get("title"),
     content: data.get("content"),
     user,
@@ -69,15 +69,15 @@ export async function action({ request, params }: any) {
 
   if (method === "PATCH") {
     const questionId = params.questionId;
-    questionData.id = questionId
+    questionData.id = questionId;
     url = `http://localhost:8080/questions/${questionId}`;
   }
-
 
   const response = await fetch(url, {
     method: method,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(questionData),
   });

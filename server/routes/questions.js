@@ -52,7 +52,7 @@ router.post("/", async (req, res, next) => {
   if (!isValidText(data.title)) {
     errors.title = "invalid Title";
   }
-  if (!isValidText(data.content)) {
+  if (!isValidText(data.content)) { 
     errors.content = "invalid Content";
   }
 
@@ -103,7 +103,6 @@ router.patch("/:id", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
-    console.log("here");
     const id = req.params.id;
     const removedQuestion = await erase(id);
     res.json({ message: "Question deleted." });
